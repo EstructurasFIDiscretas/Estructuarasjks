@@ -16,7 +16,7 @@ function loadBooks() {
             listaLibros.innerHTML = '';
             books.forEach(book => {
                 const li = document.createElement('li');
-                li.textContent = `${book[0]} ${book[1]} ${book[2]} ${book[3]} ${book[4]}`;
+                li.textContent = `${book[0]} ${book[1]} ${book[2]} ${book[3]} ${book[4]} ${book[5]} ${book[6]}`;
                 listaLibros.appendChild(li);
             });
         });
