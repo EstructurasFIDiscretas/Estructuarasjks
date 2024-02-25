@@ -36,7 +36,7 @@ function searchBooks() {
     const searchInput = document.getElementById('searchInput');
     const searchTerm = searchInput.value.toLowerCase();
     
-    fetch('LibrosUNAM.csv')
+    fetch('Libros.csv')
     .then(response => response.text())
     .then(data => {
         const books = data.split('\n').map(line => line.split(','));
