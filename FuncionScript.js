@@ -6,22 +6,15 @@ function loadBooks() {
         displayBooks(books, 'listaLibros');
     });
 }
+function loadBooksUnam(() {
+    fetch('LibrosUNAM.csv')
+    .then(response => response.text())
+    .then(data => {
+        const books = data.split('\n').map(line => line.split(','));
+        displayBooks(books, 'listaLibrosUNAM');
+    });
+}
 
-    function loadBooksUnam() {
-        fetch('LibrosUNAM.csv')
-        .then(response => response.text())
-        .then(data => {
-            const books = data.split('\n').map(line => line.split(','));
-            const listaLibros = document.getElementById('listaLibrosUNAM');
-            listaLibros.innerHTML = '';
-            books.forEach(book => {
-                const li = document.createElement('li');
-                li.textContent = `${book[0]} ${book[1]} ${book[2]} ${book[3]} ${book[4]} ${book[5]} ${book[6]}`;
-                listaLibros.appendChild(li);
-            });
-        });
-    }
-loadBooksUnam();
 function displayBooks(books, listId) {
     const listaLibros = document.getElementById(listId);
     listaLibros.innerHTML = '';
@@ -36,7 +29,7 @@ function searchBooks() {
     const searchInput = document.getElementById('searchInput');
     const searchTerm = searchInput.value.toLowerCase();
     
-    fetch('LibrosUNAM.csv')
+    fetch('Libros.csv')
     .then(response => response.text())
     .then(data => {
         const books = data.split('\n').map(line => line.split(','));
@@ -48,21 +41,24 @@ function searchBooks() {
     });
 }
 
-    function searchBooksUnam() {
-        const input = document.getElementById('searchInputUnam').value.toLowerCase();
-        const libros = document.querySelectorAll('#listaLibrosUNAM li');
-        libros.forEach(libro => {
-            const text = libro.textContent.toLowerCase();
-            if (text.includes(input)) {
-                libro.style.display = 'block';
-            } else {
-                libro.style.display = 'none';
-            }
+function searchBooksUnam() {
+    const searchInput = document.getElementById('searchInput');
+    const searchTerm = searchInput.value.toLowerCase();
+    
+    fetch('LibrosUNAM.csv')
+    .then(response => response.text())
+    .then(data => {
+        const books = data.split('\n').map(line => line.split(','));
+        const filteredBooks = books.filter(book => {
+            const bookInfo = book.join(' ').toLowerCase(); // Concatenar la información del libro en una sola cadena
+            return bookInfo.includes(searchTerm); // Verificar si la cadena contiene el término de búsqueda
         });
-    }
+        displayBooks(filteredBooks, 'LibrosUNAM.csv');
+    });
+}
 
 loadBooks();
-
+loadBooksUnam();
 
 function loadInformation() {
     fetch('ContenidoInformacion.csv')
